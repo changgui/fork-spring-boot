@@ -34,8 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class CloudFoundryVcapEnvironmentPostProcessorTests {
 
-	private final CloudFoundryVcapEnvironmentPostProcessor initializer = new CloudFoundryVcapEnvironmentPostProcessor(
-			LogFactory.getLog(getClass()));
+	private final CloudFoundryVcapEnvironmentPostProcessor initializer = new CloudFoundryVcapEnvironmentPostProcessor(LogFactory.getLog(getClass()));
 
 	private final ConfigurableApplicationContext context = new AnnotationConfigApplicationContext();
 
