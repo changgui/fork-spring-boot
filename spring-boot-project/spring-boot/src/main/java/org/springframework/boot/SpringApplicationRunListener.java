@@ -59,8 +59,7 @@ public interface SpringApplicationRunListener {
 	 * @param bootstrapContext the bootstrap context
 	 * @param environment the environment
 	 */
-	default void environmentPrepared(ConfigurableBootstrapContext bootstrapContext,
-			ConfigurableEnvironment environment) {
+	default void environmentPrepared(ConfigurableBootstrapContext bootstrapContext,ConfigurableEnvironment environment) {
 		environmentPrepared(environment);
 	}
 

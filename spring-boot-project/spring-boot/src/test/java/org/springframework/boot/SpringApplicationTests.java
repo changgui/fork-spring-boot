@@ -1209,15 +1209,13 @@ class SpringApplicationTests {
 	void addBootstrapper() {
 		SpringApplication application = new SpringApplication(ExampleConfig.class);
 		application.setWebApplicationType(WebApplicationType.NONE);
-		application.addBootstrapper(
-				(bootstrapContext) -> bootstrapContext.register(String.class, InstanceSupplier.of("boot")));
+		application.addBootstrapper((bootstrapContext) -> bootstrapContext.register(String.class, InstanceSupplier.of("boot")));
 		TestApplicationListener listener = new TestApplicationListener();
 		application.addListeners(listener);
 		application.run();
 		ApplicationStartingEvent startingEvent = listener.getEvent(ApplicationStartingEvent.class);
 		assertThat(startingEvent.getBootstrapContext().get(String.class));
-		ApplicationEnvironmentPreparedEvent environmentPreparedEvent = listener
-				.getEvent(ApplicationEnvironmentPreparedEvent.class);
+		ApplicationEnvironmentPreparedEvent environmentPreparedEvent = listener.getEvent(ApplicationEnvironmentPreparedEvent.class);
 		assertThat(environmentPreparedEvent.getBootstrapContext().get(String.class));
 	}
 
@@ -1227,24 +1225,18 @@ class SpringApplicationTests {
 		application.setWebApplicationType(WebApplicationType.NONE);
 		application.addBootstrapper((bootstrapContext) -> {
 			bootstrapContext.register(String.class, InstanceSupplier.of("boot"));
-			bootstrapContext.addCloseListener((event) -> event.getApplicationContext().getBeanFactory()
-					.registerSingleton("test", event.getBootstrapContext().get(String.class)));
+			bootstrapContext.addCloseListener((event) -> event.getApplicationContext().getBeanFactory().registerSingleton("test", event.getBootstrapContext().get(String.class)));
 		});
 		ConfigurableApplicationContext applicationContext = application.run();
 		assertThat(applicationContext.getBean("test")).isEqualTo("boot");
 	}
 
-	private <S extends AvailabilityState> ArgumentMatcher<ApplicationEvent> isAvailabilityChangeEventWithState(
-			S state) {
-		return (argument) -> (argument instanceof AvailabilityChangeEvent<?>)
-				&& ((AvailabilityChangeEvent<?>) argument).getState().equals(state);
+	private <S extends AvailabilityState> ArgumentMatcher<ApplicationEvent> isAvailabilityChangeEventWithState(S state) {
+		return (argument) -> (argument instanceof AvailabilityChangeEvent<?>) && ((AvailabilityChangeEvent<?>) argument).getState().equals(state);
 	}
 
-	private Condition<ConfigurableEnvironment> matchingPropertySource(final Class<?> propertySourceClass,
-																	  final String name) {
-
+	private Condition<ConfigurableEnvironment> matchingPropertySource(final Class<?> propertySourceClass, final String name) {
 		return new Condition<ConfigurableEnvironment>("has property source") {
-
 			@Override
 			public boolean matches(ConfigurableEnvironment value) {
 				for (PropertySource<?> source : value.getPropertySources()) {
@@ -1254,18 +1246,15 @@ class SpringApplicationTests {
 				}
 				return false;
 			}
-
 		};
 	}
 
 	private Condition<ConfigurableApplicationContext> runTestRunnerBean(final String name) {
 		return new Condition<ConfigurableApplicationContext>("run testrunner bean") {
-
 			@Override
 			public boolean matches(ConfigurableApplicationContext value) {
 				return value.getBean(name, AbstractTestRunner.class).hasRun();
 			}
-
 		};
 	}
 
