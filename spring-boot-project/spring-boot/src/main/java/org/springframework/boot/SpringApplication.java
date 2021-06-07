@@ -413,6 +413,7 @@ public class SpringApplication {
 		postProcessApplicationContext(context);
 		// 执行实现了ApplicationContextInitializer的初始化器
 		applyInitializers(context);
+		// 发布事件ApplicationContextInitializedEvent
 		listeners.contextPrepared(context);
 		bootstrapContext.close(context);
 		if (this.logStartupInfo) {
@@ -628,6 +629,7 @@ public class SpringApplication {
 	 * @param context the application context
 	 */
 	protected void postProcessApplicationContext(ConfigurableApplicationContext context) {
+		// 设置bean名字生成器
 		if (this.beanNameGenerator != null) {
 			context.getBeanFactory().registerSingleton(AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR, this.beanNameGenerator);
 		}
